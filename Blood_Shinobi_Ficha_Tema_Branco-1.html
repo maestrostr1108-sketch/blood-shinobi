@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blood Shinobi – Ficha de Personagem</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style id="css">
+:root{--bg:#ffffff;--card:#f5f5f5;--line:#d6d6d6;--o:#b45b00;--bone:#171717;--mut:#666666;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--bone);font-family:Georgia,serif;line-height:1.45}
+.wrap{max-width:700px;margin:0 auto;padding:18px 16px 60px}
+.frame{border:1.5px solid var(--o);outline:1px solid var(--line);outline-offset:4px;padding:18px 16px}
+header{text-align:center}
+.orn{color:var(--o);letter-spacing:.35em;font-size:14px}
+h1{font-family:"UnifrakturCook",Georgia,serif;font-size:clamp(34px,10vw,52px);margin:6px 0 0;font-weight:700}
+.sub{font-family:"UnifrakturCook",Georgia,serif;color:var(--o);font-size:22px}
+h2{font-family:"UnifrakturCook",Georgia,serif;font-size:24px;margin:26px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--o);font-weight:700}
+h2:before{content:"✠ ";color:var(--o);font-size:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.grid .full{grid-column:1/-1}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+label{display:block;margin:10px 0 3px;font-weight:bold;font-size:15px}
+label small{font-weight:normal;color:var(--mut);font-style:italic}
+input,select,textarea{width:100%;background:var(--card);color:var(--bone);border:1px solid #d0d0d0;border-radius:3px;padding:9px 10px;font:inherit;font-size:16px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--o)}
+textarea{min-height:84px;resize:vertical}
+button{background:var(--o);color:#ffffff;border:0;border-radius:3px;padding:10px 16px;font:inherit;font-weight:bold;cursor:pointer}
+button.alt{background:transparent;border:1px solid var(--o);color:var(--bone)}
+button.sm{padding:5px 9px;font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+#msg{margin-top:12px;color:var(--mut);min-height:20px}#msg a{color:var(--bone)}
+.pv{margin-top:8px;max-width:180px;border:1px solid var(--o);display:none}
+#adm{margin-top:34px;border-top:1px dashed var(--line);padding-top:16px}
+#adm .box{background:var(--card);border:1px solid var(--line);padding:10px;margin:10px 0}
+#adm .r{display:grid;grid-template-columns:1fr 1fr 130px;gap:6px;margin:6px 0;align-items:start}
+#adm .b{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}
+#adm input,#adm select,#adm textarea{padding:6px 8px;font-size:14px}
+#adm textarea{min-height:60px}
+@media(max-width:520px){#adm .r{grid-template-columns:1fr}}
+.pw{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.pw input{width:160px}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap"><div class="frame">
+<header><div class="orn">✠ ─ ❖ ─ ✞ ─ ❖ ─ ✠</div><h1>Blood Shinobi</h1><div class="sub">Ficha de Personagem</div></header>
+<form id="f" onsubmit="return false"></form>
+<div class="actions"><button id="pdf">Gerar PDF</button><button class="alt" id="clear">Limpar ficha</button><button class="alt" id="cfgbtn">⚙ Editar opções</button><button class="alt" id="share">Compartilhar link</button></div>
+<div class="pw" id="pwbox" style="display:none"><input id="pw" type="password" placeholder="Senha" inputmode="numeric" autocomplete="off"><button id="pwok">Entrar</button><span id="pwerr"></span></div>
+<div id="msg"></div>
+<div id="adm" style="display:none"></div>
+</div></div>
+<script id="cfg" type="application/json">{"sections":[{"t":"Player","i":[{"id":"a1","l":"Player","h":"","y":"text"},{"id":"a2","l":"Idade","h":"","y":"text"}]},{"t":"Dados do Personagem","i":[{"id":"b1","l":"Nome","y":"text"},{"id":"b2","l":"Idade","y":"text"},{"id":"b3","l":"Sexo","y":"text"},{"id":"b4","l":"Clã","y":"text"},{"id":"b5","l":"Aldeia / Nação","y":"text"},{"id":"b6","l":"Moradia","y":"text"},{"id":"b6c","l":"Cargo","y":"text"},{"id":"b7","l":"Profissão","y":"text"},{"id":"b8","l":"Nível de Profissão","h":"Aprendiz / Mestre","y":"select","o":["Aprendiz","Mestre"]},{"id":"b9","l":"Afiliação","h":"estabelecimento, organização","y":"text"},{"id":"b10","l":"Ryos","y":"text","d":"¥ 1.000"},{"id":"b11","l":"Código Banking","h":"4 últimos números do telefone","y":"text"},{"id":"b12","l":"Heranças","h":"Kekkei Genkai, Tota","y":"text"},{"id":"b13","l":"Aparência","h":"imagem em 2D","y":"image"}]},{"t":"Dados Shinobi","i":[{"id":"c1","l":"Patente","y":"text"},{"id":"c2","l":"Ranking","h":"de acordo com patente","y":"text"},{"id":"c3","l":"Natureza de Chakra","y":"text"},{"id":"c4","l":"Status","h":"Ativo / Modo Off / Morto","y":"select","o":["Ativo","Modo Off","Morto"]}]},{"t":"Jutsus","i":[{"id":"d1","l":"Jutsus","y":"area"},{"id":"d2","l":"Jutsus Bijuu","y":"area"},{"id":"d3","l":"Jutsus Kuchiyose","y":"area"},{"id":"d4","l":"Jutsus Kekkei Tōta","y":"area"},{"id":"d5","l":"Jutsus Kekkei Genkai","y":"area"}]},{"t":"Kuchiyoses","i":[{"id":"e1","l":"Kuchiyoses","y":"area"}]},{"t":"Inventário","i":[{"id":"g1","l":"Armas / Itens","y":"area"}]},{"t":"História","i":[{"id":"h1","l":"","h":"Obrigatória para quem inicia em cargo ou patente alta","y":"area"}]}]}</script>
+<script id="app">
+const PASS = "1889"; // Só libera a edição das opções (verificada no navegador; não é proteção forte).
+const KEY = "bs_ficha_v2", $ = id => document.getElementById(id);
+const WRAP0 = $("wrap").outerHTML; // markup estático, capturado antes de montar o formulário
+let cfg = JSON.parse($("cfg").textContent), data = {}, imgs = {};
+const el = (t, p = {}, k = []) => { const e = document.createElement(t); Object.assign(e, p); k.forEach(c => e.append(c)); return e; };
+const say = (t, html) => { $("msg")[html ? "innerHTML" : "textContent"] = t; };
+// Maiúscula obrigatória apenas no início da frase (início do texto, depois de . ! ? e a cada nova linha)
+const cap = s => String(s).replace(/(^|[.!?…]\s+|\n\s*)(\p{Ll})/gu, (m, a, b) => a + b.toUpperCase());
+
+// ---- Formulário (aberto para qualquer pessoa com o link)
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ data, imgs })); } catch (e) {} }
+function load() { try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s) { data = s.data || {}; imgs = s.imgs || {}; } } catch (e) {} }
+function render() {
+  const f = $("f"); f.innerHTML = "";
+  for (const s of cfg.sections) {
+    f.append(el("h2", { textContent: s.t }));
+    const g = el("div", { className: "grid" }); f.append(g);
+    for (const it of s.i) {
+      const box = el("div", { className: it.y === "area" || it.y === "image" ? "full" : "" });
+      const lb = el("label", { textContent: (it.l || s.t) + (it.h ? " " : "") });
+      if (it.h) lb.append(el("small", { textContent: "(" + it.h + ")" }));
+      let e;
+      if (it.y === "select") { e = el("select"); e.append(el("option", { value: "", textContent: "Selecione" })); (it.o || []).forEach(o => e.append(el("option", { value: o, textContent: o }))); }
+      else if (it.y === "area") e = el("textarea", { style: "min-height:" + (it.l ? 84 : 190) + "px" });
+      else if (it.y === "image") e = el("input", { type: "file", accept: "image/*" });
+      else e = el("input", { type: "text" });
+      if (it.y !== "image") {
+        e.value = data[it.id] !== undefined ? data[it.id] : (it.d || "");
+        e.oninput = e.onchange = () => { if (it.y !== "select") { const c = cap(e.value); if (c !== e.value && c.length === e.value.length) { const a = e.selectionStart, b = e.selectionEnd; e.value = c; try { e.setSelectionRange(a, b); } catch (x) {} } } data[it.id] = e.value; save(); };
+      } else {
+        const pv = el("img", { className: "pv", alt: "Prévia" }); if (imgs[it.id]) { pv.src = imgs[it.id].data; pv.style.display = "block"; }
+        e.onchange = () => {
+          const file = e.files[0]; if (!file) return; const r = new FileReader();
+          r.onload = () => { const im = new Image(); im.onload = () => {
+            const k = Math.min(1, 900 / Math.max(im.width, im.height)), w = Math.round(im.width * k), h = Math.round(im.height * k), c = el("canvas", { width: w, height: h }), x = c.getContext("2d");
+            x.fillStyle = "#fff"; x.fillRect(0, 0, w, h); x.drawImage(im, 0, 0, w, h);
+            imgs[it.id] = { data: c.toDataURL("image/jpeg", .85), w, h }; pv.src = imgs[it.id].data; pv.style.display = "block"; save(); };
+            im.src = r.result; };
+          r.readAsDataURL(file); };
+        box.append(lb, e, pv); g.append(box); continue;
+      }
+      box.append(lb, e); g.append(box);
+    }
+  }
+}
+$("clear").onclick = () => { if (confirm("Apagar todos os dados da ficha?")) { data = {}; imgs = {}; save(); render(); } };
+
+$("share").onclick = async () => {
+  const url = window.location.href;
+  if (!url || url === "about:blank" || url.startsWith("file:")) {
+    say("Para compartilhar um link público, publique este arquivo em um serviço de hospedagem e abra a página pelo endereço HTTPS.");
+    return;
+  }
+  try {
+    if (navigator.share) await navigator.share({ title: "Blood Shinobi – Ficha de Personagem", url });
+    else if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(url); say("Link copiado."); }
+    else say("Copie o endereço da página no navegador para compartilhar: " + url);
+  } catch (e) {
+    if (e && e.name !== "AbortError") say("Não foi possível compartilhar automaticamente. Copie o endereço da página no navegador.");
+  }
+};
+
+
+// ---- PDF igual ao modelo (texto em árvore, fundo branco, Arial 11)
+async function makePdf() {
+  const S = 2.6, PW = 595.28, PH = 841.89, M = 72, LH = 14.5, { jsPDF } = window.jspdf, doc = new jsPDF({ unit: "pt", format: "a4" });
+  let cv, ctx, y, n = 0, imgL = PW, imgB = 0;
+  const LD = {}; for (const k in imgs) await new Promise(r => { const i = new Image(); i.onload = () => { LD[k] = i; r(); }; i.onerror = r; i.src = imgs[k].data; });
+  const flush = () => { if (!cv) return; if (n++) doc.addPage(); doc.addImage(cv.toDataURL("image/jpeg", .93), "JPEG", 0, 0, PW, PH); };
+  const page = () => { flush(); cv = el("canvas", { width: PW * S, height: PH * S }); ctx = cv.getContext("2d"); ctx.scale(S, S);
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, PW, PH); ctx.fillStyle = "#000"; ctx.font = '11px Arial,"Helvetica Neue","Segoe UI Symbol","DejaVu Sans",sans-serif'; y = M + (n ? 24 : 11);
+    ctx.strokeStyle = "#000"; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(237, 767); ctx.lineTo(376, 767); ctx.stroke();
+    const ft = "Propriedade de  Elyseu Luiz"; ctx.fillText(ft, 306.5 - ctx.measureText(ft).width / 2, 783); };
+  const line = (t, ind = 0) => { if (y > PH - 95) page(); ctx.fillText(t, M + ind, y); y += LH; };
+  const wrap = (txt, w) => { const out = []; for (const p of String(txt).split("\n")) { let cur = ""; for (const wd of p.split(" ")) { const t = cur ? cur + " " + wd : wd; if (cur && ctx.measureText(t).width > w) { out.push(cur); cur = wd; } else cur = t; } out.push(cur); } return out; };
+  page();
+  ["𝄞✎ : BLOOD SHINOBI", "└─────── • ────────", "", "FICHA DE PERSONAGEM", "───────────────────", ""].forEach(t => line(t));
+  for (const s of cfg.sections) {
+    const flat = s.i.length === 1 && !s.i[0].l;
+    if (flat) page();
+    const iid = s.i.find(i => i.y === "image" && imgs[i.id]), im = iid && imgs[iid.id];
+    if (im) { if (y + 180 > PH - 95) page(); const bw = 130, bh = 170, k = Math.min(bw / im.w, bh / im.h), w = im.w * k, h = im.h * k;
+      imgL = PW - M - bw; imgB = y - 11 + bh + 8; ctx.strokeStyle = "#000"; ctx.lineWidth = .6; ctx.strokeRect(imgL - 1, y - 12, bw + 2, bh + 2);
+      if (LD[iid.id]) ctx.drawImage(LD[iid.id], imgL + (bw - w) / 2, y - 11 + (bh - h) / 2, w, h); }
+    line("∙ " + s.t.toUpperCase() + (flat ? ":" : ""));
+    if (flat) { const v = cap(String(data[s.i[0].id] || "").trim()); if (v) wrap(v, PW - 2 * M).forEach(t => line(t)); continue; }
+    for (let q = 0; q < s.i.length; q++) {
+      const it = s.i[q], pre = q === s.i.length - 1 ? "└ " : "├ ", pw = ctx.measureText(pre).width;
+      const v = it.y === "image" ? "" : cap(String(data[it.id] !== undefined ? data[it.id] : (it.d || "")).trim());
+      const txt = (it.l ? it.l + ": " : "") + v, lines = wrap(txt, (y < imgB ? imgL - 8 : PW - M) - M - pw);
+      lines.forEach((t, k) => line((k ? "" : pre) + t, k ? pw : 0));
+    }
+    line("");
+  }
+  flush(); return doc.output("blob");
+}
+$("pdf").onclick = async () => {
+  say("Gerando PDF…");
+  try {
+    const nome = (data[(cfg.sections[1] && cfg.sections[1].i[0] || {}).id] || "personagem").trim().replace(/[^\w\-]+/g, "_") || "personagem", fn = "Ficha_" + nome + ".pdf", blob = await makePdf();
+    let dl = null; try { dl = window.claude ? await window.claude.use("downloads") : null; } catch (e) {}
+    if (dl) { try { await dl.save({ filename: fn, data: blob }); say("PDF pronto."); } catch (e) { say(e && e.code === "declined" ? "Download cancelado." : "Não foi possível salvar o PDF aqui."); } return; }
+    const u = URL.createObjectURL(blob), a = el("a", { href: u, download: fn }); document.body.append(a); a.click(); a.remove();
+    say('PDF gerado. Se o download não começar, <a href="' + u + '" target="_blank" rel="noopener">abra o PDF aqui</a>.', true);
+  } catch (e) { say("Erro ao gerar o PDF."); }
+};
+
+// ---- Editor de opções (senha) – salva para todos republicando a própria página
+let draft = null;
+$("cfgbtn").onclick = () => { $("pwbox").style.display = "flex"; $("pw").focus(); };
+const tryPw = () => { if ($("pw").value === PASS) { $("pw").value = ""; $("pwbox").style.display = "none"; $("pwerr").textContent = ""; draft = JSON.parse(JSON.stringify(cfg)); admin(); } else $("pwerr").textContent = "Senha incorreta."; };
+$("pwok").onclick = tryPw; $("pw").onkeydown = e => { if (e.key === "Enter") tryPw(); };
+const mv = (a, i, d) => { const j = i + d; if (j >= 0 && j < a.length) [a[i], a[j]] = [a[j], a[i]]; admin(); };
+const btn = (t, fn, c = "alt sm") => el("button", { type: "button", textContent: t, className: c, onclick: fn });
+function admin() {
+  const A = $("adm"); A.style.display = "block"; A.innerHTML = "";
+  A.append(el("h2", { textContent: "Editar opções" }), el("p", { textContent: "Altere seções e campos, e escolha se cada resposta é texto ou seleção (com as opções). Clique em “Salvar para todos” para publicar. Rótulo vazio = sem nome no PDF.", style: "color:var(--mut)" }));
+  draft.sections.forEach((s, si) => {
+    const box = el("div", { className: "box" });
+    box.append(el("input", { value: s.t, placeholder: "Nome da seção", oninput: e => s.t = e.target.value }));
+    box.append(el("div", { className: "b" }, [btn("▲", () => mv(draft.sections, si, -1)), btn("▼", () => mv(draft.sections, si, 1)), btn("Remover seção", () => { if (confirm("Remover esta seção?")) { draft.sections.splice(si, 1); admin(); } })]));
+    s.i.forEach((it, ii) => {
+      const r = el("div", { className: "r" });
+      const ty = el("select", { onchange: e => { it.y = e.target.value; if (it.y === "select" && !(it.o && it.o.length)) it.o = ["Opção 1", "Opção 2"]; admin(); } }); [["text", "Resposta: texto curto"], ["area", "Resposta: texto longo"], ["select", "Resposta: seleção"], ["image", "Imagem"]].forEach(([v, t]) => ty.append(el("option", { value: v, textContent: t, selected: it.y === v })));
+      r.append(el("input", { value: it.l || "", placeholder: "Rótulo", oninput: e => it.l = e.target.value }), el("input", { value: it.h || "", placeholder: "Dica (entre parênteses)", oninput: e => it.h = e.target.value }), ty);
+      if (it.y === "select") r.append(el("textarea", { value: (it.o || []).join("\n"), placeholder: "Uma opção por linha", style: "grid-column:1/-1", oninput: e => it.o = e.target.value.split("\n").map(x => x.trim()).filter(Boolean) }));
+      else if (it.y === "text") r.append(el("input", { value: it.d || "", placeholder: "Valor inicial (opcional)", style: "grid-column:1/-1", oninput: e => it.d = e.target.value }));
+      r.append(el("div", { className: "b", style: "grid-column:1/-1" }, [btn("▲", () => mv(s.i, ii, -1)), btn("▼", () => mv(s.i, ii, 1)), btn("Remover campo", () => { s.i.splice(ii, 1); admin(); })]));
+      box.append(r);
+    });
+    box.append(btn("+ Campo", () => { s.i.push({ id: "n" + Date.now().toString(36), l: "Novo campo", y: "text" }); admin(); }));
+    A.append(box);
+  });
+  A.append(el("div", { className: "b" }, [btn("+ Seção", () => { draft.sections.push({ t: "Nova seção", i: [] }); admin(); }),
+    btn("Salvar para todos", saveAll, ""), btn("Cancelar", () => { draft = null; A.style.display = "none"; })]));
+  A.scrollIntoView({ block: "nearest" });
+}
+async function saveAll() {
+  let art = null; try { art = window.claude ? await window.claude.use("artifact") : null; } catch (e) {}
+  if (!art) { say("Para salvar para todos, abra o link logado na conta dona da página."); return; }
+  const j = JSON.stringify(draft).replace(/</g, "\\u003c");
+  const html = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Blood Shinobi – Ficha de Personagem</title><link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script><style id="css">' + $("css").textContent + '</style></head><body>' + WRAP0 + '<script id="cfg" type="application/json">' + j + '<\/script><script id="app">' + $("app").textContent + '<\/script></body></html>';
+  try { say("Salvando…"); await art.publish(html); say("Opções salvas."); } catch (e) { say(e && /writer|granted/.test(e.code || "") ? "Somente quem edita a página pode salvar as opções." : "Não foi possível salvar as opções."); }
+}
+load(); render();
+</script>
+</body>
+</html>
